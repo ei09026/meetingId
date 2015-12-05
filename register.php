@@ -1,0 +1,39 @@
+<?php
+
+	$dbconn3 = pg_connect("host=localhost port=5432 dbname=meeting user=postgres password=admin");
+	
+	$re = '/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i';
+	
+	
+	date_default_timezone_set("UTC");
+	$atualDate =  date("Y-m-d H:i:s", time());
+	
+	$first_name = $_POST["first_name"];;
+	$last_name = $_POST["last_name"];;
+	$email = $_POST["email"];;
+	$phone = $_POST["phone"];;
+	
+	
+	$codedEmail = pg_escape_string($email);
+	$codedFirstName = pg_escape_string($first_name);
+	$codedLastName = pg_escape_string($last_name);
+	$codedPhone = pg_escape_string($phone);
+	$codedAtualDate = pg_escape_string($atualDate);
+
+	$exists_email = pg_query($dbconn3, "SELECT count(*) from  register where register.email = ('$codedEmail')");		
+	$count_email = pg_fetch_result($exists_email, 0);		
+		
+	if (preg_match($re, $email) === 1) {	
+		if($count_email != 0){
+			echo -1;
+		}else {
+			$result = pg_query($dbconn3, "insert into register (fisrt_name, last_name, email, phone, register_date) values ('$codedFirstName', '$codedLastName', '$codedEmail', '$codedPhone', '$codedAtualDate')");
+			echo 1;
+		}
+	}else{
+		echo 0;
+	}
+	
+	pg_close($dbconn3);									
+   
+?>
