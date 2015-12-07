@@ -1,6 +1,16 @@
 <?php
 
-	$dbconn3 = pg_connect("host=localhost port=5432 dbname=meeting user=postgres password=admin");
+	//$dbconn3 = pg_connect("host=localhost port=5432 dbname=meeting user=postgres password=admin");
+	
+	define('DB_HOST', getenv('OPENSHIFT_POSTGRESQL_DB_HOST'));
+	define('DB_PORT', getenv('OPENSHIFT_POSTGRESQL_DB_PORT'));
+
+	$dbhost = constant("DB_HOST"); // Host name 
+	$dbport = constant("DB_PORT"); // Host port
+	$dbusername = 'adminy5ttxew';
+	$dbpassword = 'IZdGfGX6kCHl';
+
+	$dbconn3 = pg_connect("host='$dbhost' port='$dbport' dbname=v1 user='$dbusername' password='$dbpassword'");
 	
 	$re = '/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i';
 	

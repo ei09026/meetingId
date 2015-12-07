@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html >
+
+	<script data-require="angular.js@1.4.3" data-semver="1.4.3" src="../js/angular.js"></script>
+	<script src="../js/angular-animate.js"></script>
+
+	<script src= "../app.js"></script>
+	<script src= "../controllers/meeting.js"></script>
+	
+	<link rel="stylesheet" href="../css/angular-material.min.css">
+	
+	    <!-- Angular Material Dependencies -->
+    <script src="../js/angular.min.js"></script>
+    <script src="../js/angular-animate.min.js"></script>
+	<script src="../js/ng-csv.js"></script>
+	<script src="../js/angular-sanitize.min.js"></script>
+    <script src="../js/angular-aria.min.js"></script>
+	
+    <!-- Angular Material Javascript now available via Google CDN; version 0.11.2 used here -->
+    <script src="../js/angular-material.min.js"></script>
+	
+	<link href="../bower_components/angular-material-data-table/dist/md-data-table.min.css" rel="stylesheet" type="text/css"/>
+
+	<!-- module -->
+	<script type="text/javascript" src="../bower_components/angular-material-data-table/dist/md-data-table.min.js"></script>	
+
+<head>
+<style>
+.backgroungimage{
+	background-image: url(https://unsplash.it/1920/1080/?random);
+}
+md-toast.md-success-toast-theme {
+    background-color: #37BC9B;
+}
+
+md-toast.md-error-toast-theme {
+    background-color: #DA4453;
+}
+
+.avatar-frame{border: 2px solid #c7b89e;}
+.avatar-frame,.avatar-frame img{
+	width: 50px;
+	height: 50px;	
+	-webkit-border-radius: 30px; /* Saf3+, Chrome */
+	border-radius: 30px; /* Opera 10.5, IE 9 */
+	/*-moz-border-radius: 30px;  Disabled for FF1+ */
+}
+
+.hand{
+	cursor: pointer;
+}
+
+.back_tr{
+	background-color:#eee!important;
+}
+</style>
+</head>
+<body ng-app="MyApp" ng-controller="DemoCtrl" ng-class="{backgroungimage:visibleScreen == 0 || visibleScreen == 1}">
+
+<div>
+<div ng-if="visibleScreen == null || visibleScreen == -1" style="padding-top: 250px;" layout-align="center center" layout="row" layout-sm="column" layout-align="space-around">
+   <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+</div>
+  
+<div ng-if="visibleScreen == 0 || visibleScreen == 1" layout="row" flex="60" style="padding-top: 250px; padding-left: 250px;" layout-align="center center">
+
+		<md-card ng-show="visibleScreen == 0" style="min-width:550px;">
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    
+                    <h2>
+                        <span class="md-title">Placard Tips</span>
+                    </h2>
+                </div>
+            </md-toolbar>
+            <md-card-content style="padding-left: 24px;padding-right: 32px; padding-top: 24px">
+                <md-content>
+                    <br>
+                    <div class="layout-column">
+                        <md-input-container md-no-float="" class="md-input-has-placeholder md-has-icon flex-100">
+                            <md-icon md-svg-src="../img/icons/ic_email_24px.svg" class="email" aria-hidden="true"></md-icon>
+                            <input type="text"  placeholder="E-mail" ng-model="$parent.login_email" ng-required="true" ng-keydown="$event.which===13 && login()" class="ng-pristine ng-untouched md-input ng-invalid ng-invalid-required ng-valid-email" aria-label="login.label.email" id="input_0" required="required" aria-required="true" aria-invalid="true">
+                        </md-input-container>
+                        <md-input-container md-no-float="" class="md-input-has-placeholder md-has-icon flex">
+							<md-icon md-svg-icon="../img/icons/ic_vpn_key_24px.svg"></md-icon>
+                            <input type="password"  placeholder="Palavra passe" ng-model="$parent.login_password" ng-required="true" ng-keydown="$event.which===13 && login()" class="ng-pristine ng-untouched md-input ng-invalid ng-invalid-required" aria-label="login.label.password" id="input_1" required="required" aria-required="true" aria-invalid="true">
+                        </md-input-container>
+                    </div>
+          
+                </md-content>
+            </md-card-content>
+            <div style="padding-bottom: 24px;" class="layout-align-center-center layout-row">
+               
+			
+			   
+			   <button class="md-raised md-primary md-button md-ink-ripple" ng-click="login()">
+                    Entrar
+                </button>
+					
+            </div>
+        </md-card>
+		
+		
+		<md-card ng-show="visibleScreen == 1" style="min-width:550px;">
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    
+                    <h2>
+                        <span class="md-title">Placard Tips</span>
+                    </h2>
+                </div>
+            </md-toolbar>
+            <md-card-content style="padding-left: 24px;padding-right: 32px; padding-top: 24px">
+                <md-content>
+                    <br>
+                    <div class="layout-column">
+                        <md-input-container md-no-float="" class="md-input-has-placeholder md-has-icon flex">
+                            <md-icon md-svg-src="../img/icons/ic_email_24px.svg"></md-icon>
+                            <input type="text"  placeholder="E-mail" ng-model="$parent.register_email" ng-required="true" ng-keydown="$event.which===13 && register()" aria-label="login.label.email"  required="required" aria-required="true" aria-invalid="true">
+                        </md-input-container>
+						<md-input-container md-no-float="" class="md-input-has-placeholder md-has-icon flex">
+                            <md-icon md-svg-src="../img/icons/ic_person_24px.svg"></md-icon>
+                            <input type="text"  placeholder="Username" ng-model="$parent.register_username" ng-required="true" ng-keydown="$event.which===13 && register()" aria-label="login.label.username"  required="required" aria-required="true" aria-invalid="true">
+                        </md-input-container>
+						
+						<md-input-container md-no-float="" class="md-input-has-placeholder md-has-icon flex">
+                            <md-icon md-svg-src="../img/icons/ic_monochrome_photos_24px.svg"></md-icon>
+                            <input type="file"  placeholder="Foto" ng-model="$parent.register_photo" base-sixty-four-input ng-required="true" ng-keydown="$event.which===13 && register()" aria-label="login.label.username"  required="required" aria-required="true" aria-invalid="true">
+                        </md-input-container>							
+							  										
+                        <md-input-container md-no-float="" class="md-input-has-placeholder md-has-icon flex">
+							<md-icon md-svg-icon="../img/icons/ic_vpn_key_24px.svg"></md-icon>
+                            <input type="password"  placeholder="Palavra passe" ng-model="$parent.register_password" ng-required="true" ng-keydown="$event.which===13 && register()" class="ng-pristine ng-untouched md-input ng-invalid ng-invalid-required" aria-label="login.label.password" required="required" aria-required="true" aria-invalid="true">
+                        </md-input-container>
+						<md-input-container md-no-float="" class="md-input-has-placeholder md-has-icon flex">
+							<md-icon md-svg-icon="../img/icons/ic_vpn_key_24px.svg"></md-icon>
+                            <input type="password"  placeholder="Confirmar palavra passe" ng-model="$parent.register_confpassword" ng-required="true" ng-keydown="$event.which===13 && register()" class="ng-pristine ng-untouched md-input ng-invalid ng-invalid-required" aria-label="login.label.password" required="required" aria-required="true" aria-invalid="true">
+                        </md-input-container>
+                    </div>
+          
+                </md-content>
+            </md-card-content>
+            <div style="padding-bottom: 24px;" class="layout-align-center-center layout-row">    
+
+				<button class="md-raised md-primary md-button md-ink-ripple" ng-click="changeScreen(0);">
+                    Login
+                </button> 			
+				
+            </div>
+        </md-card>
+</div>
+</div>
+<div ng-show="visibleScreen == 3 || visibleScreen == 4 || visibleScreen == 5 || visibleScreen == 6 || visibleScreen == 7">
+ <md-content>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+
+        <img ng-src="data:image/png;base64,{{photo}}" data-err-src="../img/avatar.png" class="avatar-frame" alt="Avatar" />
+		
+		<h2 hide-sm>
+			&nbsp;&nbsp;&nbsp;
+          <span>{{username}}</span>
+        </h2>
+		<span flex></span>
+		<md-button ng-click="logout()" class="md-icon-button">
+          <md-icon md-svg-icon="../img/icons/ic_error_outline_48px.svg"></md-icon>
+		  <md-tooltip>
+			Logout
+		  </md-tooltip>
+        </md-button>
+		
+		<md-button ng-click="editProfile();" class="md-icon-button" aria-label="Profile">
+          <md-icon md-svg-icon="../img/icons/ic_person_48px.svg"></md-icon>
+		  <md-tooltip>
+			Profile
+		  </md-tooltip>
+        </md-button>	
+		
+		<md-button ng-click="home();" class="md-icon-button" aria-label="History">
+          <md-icon md-svg-icon="../img/icons/ic_home_48px.svg"></md-icon>
+		  <md-tooltip>
+			Home
+		  </md-tooltip>
+        </md-button>
+		
+
+      </div>
+    </md-toolbar>
+ </md-content>
+ 
+	  
+		  
+<md-data-table-toolbar ng-if="visibleScreen == 3 || visibleScreen == 6">
+ 
+  <div ng-if="visibleScreen == 6" ng-click="returnTopUsers();" class="hand"><md-icon md-svg-icon="../img/icons/ic_arrow_back_48px.svg"></md-icon>
+	
+  </div>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  
+</md-data-table-toolbar>
+
+
+<md-content>
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab ng-if="visibleScreen == 3"  md-dynamic-height label="Registos">
+        <md-content class="md-padding">
+		
+		<md-data-table-toolbar>
+			<md-icon md-svg-icon="../img/icons/ic_search_24px.svg"></md-icon>
+				<md-input-container flex>
+				  <label>Procurar</label>
+				  <input ng-change='searchPremierLeague()' ng-model="$parent.premierLeagueSearch">
+				</md-input-container>
+			<md-icon class="hand" ng-if="premierLeagueSearch.length > 0" ng-click="cleanPremierLeague()" md-svg-icon="../img/icons/ic_close_24px.svg"></md-icon>
+		</md-data-table-toolbar>
+
+         <md-data-table-container>		
+			  <table md-data-table md-progress="deferred">
+				<thead md-order="query.order" md-trigger="onOrderChange">
+				  <tr>
+					<th name="ID"></th>
+					<th name="Nome"></th>
+					<th name="Apelido"></th>
+					<th name="Email"></th>
+					<th name="Contacto"></th>					
+					<th name="Data Registo"></th>				
+				  </tr>
+				</thead>
+				<tbody>
+
+				  <tr ng-repeat="x in registeredUsers | limitTo: queryregisteredUsers.limit: (queryregisteredUsers.page - 1) * queryregisteredUsers.limit" md-auto-select>
+					<td class="hand" onmouseover="this.style.background='#eeeeee';" onmouseout="this.style.background='none';">{{x.id}}</td>
+					<td class="hand" onmouseover="this.style.background='#eeeeee';" onmouseout="this.style.background='none';">{{x.first_name}}</td>
+					<td  class="hand" onmouseover="this.style.background='#eeeeee';" onmouseout="this.style.background='none';">{{x.last_name}}</td> 
+					<td  class="hand" onmouseover="this.style.background='#eeeeee';" onmouseout="this.style.background='none';">{{x.email}}</td>
+					<td  class="hand" onmouseover="this.style.background='#eeeeee';" onmouseout="this.style.background='none';">{{x.phone}}</td>
+					<td  class="hand" onmouseover="this.style.background='#eeeeee';" onmouseout="this.style.background='none';">{{x.date}}</td>
+				  </tr>
+				</tbody>
+			  </table>
+						  
+			</md-data-table-container>
+			<md-data-table-pagination md-limit="queryregisteredUsers.limit" md-page="queryregisteredUsers.page" md-total="{{registeredUsersLength}}" md-trigger="onpagechange"></md-data-table-pagination>
+        </md-content>
+		
+			<button type="button" ng-csv="registeredUsers" filename="Registos.csv">Export</button>
+      </md-tab>
+	  
+	  
+      
+	 
+	  
+	  
+	  <md-tab ng-if="visibleScreen == 7" md-dynamic-height label="Push Notification">
+	  
+        <md-content class="md-padding">
+			 <md-card-content style="padding-left: 24px;padding-right: 32px; padding-top: 24px">
+                <md-content>
+                    <br>
+					
+
+                    <div class="layout-column">
+     
+						<md-input-container md-no-float="" class="md-input-has-placeholder md-has-icon flex">                           
+                            <input type="text"  placeholder="Titulo Mensagem" ng-required="true" ng-keydown="$event.which===13 && register()" aria-label="login.label.username"  required="required" aria-required="true" aria-invalid="true">
+                        </md-input-container>
+						
+						<md-input-container md-no-float="" class="md-input-has-placeholder md-has-icon flex">
+                            
+                            <input type="text"  placeholder="Conteudo" ng-required="true" ng-keydown="$event.which===13 && register()" aria-label="login.label.username"  required="required" aria-required="true" aria-invalid="true">
+                        </md-input-container>
+						
+                    </div>
+					
+					 <section layout="row" layout-sm="column" layout-align="end end" layout-wrap>
+					  <md-button ng-click="saveUser();" class="md-raised md-primary">Enviar</md-button>
+					</section>
+          
+                </md-content>
+            </md-card-content>	
+        </md-content>
+      </md-tab>
+	  
+	  
+	 
+    </md-tabs>
+  </md-content>
+<!-- CONTENT END-->
+
+      </div>
+
+  </section>
+</div>
+</div>
+</body>
+</html>
